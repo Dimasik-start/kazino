@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TG Casino | #1 в Telegram</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            padding: 12px;
+            min-height: 100vh;
+        }
+        
+        /* Заголовок */
+        .main-title {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .main-title h1 {
+            font-size: 20px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        /* Карточка баланса */
+        .balance-card {
+            background: linear-gradient(135deg, #1a2332 0%, #0f172a 100%);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #2d3a4e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        /* Вкладки */
+        .game-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab-btn {
+            flex: 1;
+            background: #1a2332;
+            border: 1px solid #2d3a4e;
+            color: #8b949e;
+            padding: 12px;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #238636;
+            border-color: #2ea043;
+            color: white;
+        }
+        .game-panel { display: none; }
+        .game-panel.active { display: block; }
+        
+        /* Ракетка */
+        .rocket-stage {
+            background: #0d1117;
+            border-radius: 24px;
+            padding: 16px;
+            border: 1px solid #2d3a4e;
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .round-timer {
+            background: #1a2332;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+        .history-bubbles {
+            display: flex;
+            gap: 6px;
+        }
+        .history-bubble {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            background: #1a2332;
+        }
+        .history-bubble.green { background: #238636; color: white; }
+        .history-bubble.red { background: #da3633; color: white; }
+        
+        .canvas-container {
+            position: relative;
+            height: 220px;
+            margin: 16px 0;
+            background: linear-gradient(180deg, #0a0f18 0%, #16202e 100%);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        #rocketCanvas { width: 100%; height: 100%; display: block; }
+        .multiplier-big {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: #f0b37b;
+            text-shadow: 0 0 30px #f0b37b;
+        }
+        
+        .bet-area { margin: 16px 0; }
+        .bet-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .bet-input-row input {
+            flex: 1;
+            background: #1a2332;
+            border: 1px solid #2d3a4e;
+            color: white;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 16px;
+        }
+        .bet-btn {
+            background: #238636;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 24px;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+        .bet-btn:disabled { opacity: 0.5; }
+        .cashout-btn {
+            width: 100%;
+            background: #f0b37b;
+            border: none;
+            color: #0d1117;
+            font-weight: bold;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .cashout-btn:disabled { opacity: 0.5; }
+        
+        .live-bets {
+            background: #1a2332;
+            border-radius: 16px;
+            padding: 12px;
+            margin-top: 16px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .bet-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #2d3a4e;
+            font-size: 14px;
+        }
+        
+        /* Мины */
+        .mines-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .mine-cell {
+            aspect-ratio: 1;
+            background: #1a2332;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            border: 1px solid #2d3a4e;
+        }
+        .mine-cell.bomb { background: #da3633; }
+        .mine-cell.gem { background: #238636; }
+    </style>
+</head>
+<body>
+
+<div class="main-title">
+    <h1>👑 №1 ИГРОВОЙ БОТ В TELEGRAM</h1>
+</div>
+
+<div class="balance-card">
+    <span>💰 БАЛАНС</span>
+    <span id="balanceDisplay">0.00 $</span>
+</div>
+
+<div class="game-tabs">
+    <button class="tab-btn active" onclick="switchTab('rocket')">🚀 Ракетка</button>
+    <button class="tab-btn" onclick="switchTab('mines')">💣 Мины</button>
+</div>
+
+<!-- РАКЕТКА -->
+<div id="rocketPanel" class="game-panel active">
+    <div class="rocket-stage">
+        <div class="game-header">
+            <div class="round-timer" id="roundStatus">⏳ Загрузка...</div>
+            <div class="history-bubbles" id="historyContainer"></div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="rocketCanvas" width="400" height="220"></canvas>
+            <div class="multiplier-big" id="multDisplay">1.00x</div>
+        </div>
+        
+        <div class="bet-area">
+            <div class="bet-input-row">
+                <input type="number" id="betAmount" value="10" min="1">
+                <button class="bet-btn" id="placeBetBtn" onclick="placeBet()">Ставка</button>
+            </div>
+            <button class="cashout-btn" id="cashoutBtn" onclick="cashout()" disabled>ЗАБРАТЬ</button>
+        </div>
+        
+        <div class="live-bets" id="liveBetsContainer">
+            <div class="bet-item">Ожидание игроков...</div>
+        </div>
+    </div>
+</div>
+
+<!-- МИНЫ -->
+<div id="minesPanel" class="game-panel">
+    <div class="rocket-stage">
+        <h3 style="margin-bottom:16px;">💣 Минное поле 3x3</h3>
+        <div class="bet-input-row">
+            <input type="number" id="minesBet" value="5" min="1">
+            <button class="bet-btn" id="minesStartBtn" onclick="startMines()">Новая игра</button>
+        </div>
+        <div class="mines-grid" id="minesGrid"></div>
+        <div style="font-size:20px; margin:10px 0;" id="minesMultDisplay">Текущий x1.00</div>
+        <button class="cashout-btn" id="minesCashoutBtn" onclick="cashoutMines()" disabled>ЗАБРАТЬ</button>
+        <div style="margin-top:12px; color:#8b949e;" id="minesStatus">Нажмите "Новая игра"</div>
+    </div>
+</div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    let userBalance = 100;
+    const balanceEl = document.getElementById('balanceDisplay');
+    
+    let rocketState = { status: 'waiting', current_mult: 1.0, bets: {}, cashouts: {}, history: [] };
+    let myBet = 0, hasBet = false, hasCashed = false;
+    
+    let minesActive = false, minesBoard = [], minesRevealed = Array(9).fill(false);
+    let minesBet = 0, minesMult = 1.0, gemsFound = 0;
+    
+    const canvas = document.getElementById('rocketCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Переключение вкладок
+    window.switchTab = (tab) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+        if (tab === 'rocket') {
+            document.querySelector('.tab-btn:first-child').classList.add('active');
+            document.getElementById('rocketPanel').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:last-child').classList.add('active');
+            document.getElementById('minesPanel').classList.add('active');
+        }
+    };
+    
+    function drawRocket() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const mult = rocketState.current_mult;
+        document.getElementById('multDisplay').innerText = mult.toFixed(2) + 'x';
+        
+        if (rocketState.status === 'flying') {
+            const progress = Math.min((mult - 1.0) / 5.0, 1.0);
+            const x = 40 + (canvas.width - 80) * progress;
+            const y = canvas.height - 40 - (canvas.height - 80) * progress * 0.7;
+            
+            ctx.fillStyle = '#ff9500';
+            ctx.beginPath();
+            ctx.moveTo(x-15, y+10);
+            ctx.lineTo(x, y+30);
+            ctx.lineTo(x+15, y+10);
+            ctx.fill();
+            
+            ctx.font = "40px Arial";
+            ctx.fillStyle = 'white';
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 20;
+            ctx.fillText('🚀', x-22, y-5);
+            ctx.shadowBlur = 0;
+        } else if (rocketState.status === 'crashed') {
+            ctx.font = "50px Arial";
+            ctx.fillStyle = '#da3633';
+            ctx.shadowBlur = 25;
+            ctx.shadowColor = '#ff0000';
+            ctx.fillText('💥', canvas.width/2-35, canvas.height/2+20);
+            ctx.shadowBlur = 0;
+        } else {
+            ctx.font = "40px Arial";
+            ctx.fillStyle = '#8b949e';
+            ctx.fillText('🚀', canvas.width/2-25, canvas.height/2);
+        }
+    }
+    
+    function updateUI() {
+        const status = rocketState.status;
+        document.getElementById('roundStatus').innerText = 
+            status === 'waiting' ? '⏳ Приём ставок...' :
+            status === 'flying' ? '🚀 ПОЛЁТ!' :
+            status === 'crashed' ? '💥 ВЗРЫВ' : '⏱ Следующий раунд...';
+        
+        document.getElementById('placeBetBtn').disabled = status !== 'waiting' || hasBet;
+        document.getElementById('cashoutBtn').disabled = status !== 'flying' || !hasBet || hasCashed;
+        
+        // Live bets
+        let html = '';
+        for (let uid in rocketState.bets) {
+            html += `<div class="bet-item"><span>👤 ${rocketState.bets[uid].name || uid}</span><span>${rocketState.bets[uid].amount}$</span></div>`;
+        }
+        document.getElementById('liveBetsContainer').innerHTML = html || '<div class="bet-item">Нет ставок</div>';
+        
+        // History
+        document.getElementById('historyContainer').innerHTML = rocketState.history.map(m => 
+            `<div class="history-bubble ${m >= 2 ? 'green' : 'red'}">${m.toFixed(1)}x</div>`
+        ).join('');
+        
+        drawRocket();
+    }
+    
+    window.placeBet = () => {
+        const amount = parseFloat(document.getElementById('betAmount').value);
+        if (amount > userBalance) { alert('Недостаточно средств'); return; }
+        if (rocketState.status !== 'waiting') return;
+        
+        userBalance -= amount;
+        myBet = amount;
+        hasBet = true;
+        balanceEl.innerText = userBalance.toFixed(2) + ' $';
+        tg.sendData(JSON.stringify({action: 'place_bet', amount}));
+    };
+    
+    window.cashout = () => {
+        if (!hasBet || hasCashed) return;
+        hasCashed = true;
+        tg.sendData(JSON.stringify({action: 'cashout'}));
+    };
+    
+    // Мины
+    window.startMines = () => {
+        const bet = parseFloat(document.getElementById('minesBet').value);
+        if (bet > userBalance) { alert('Недостаточно средств'); return; }
+        
+        tg.sendData(JSON.stringify({action: 'mines_lose', amount: bet}));
+        userBalance -= bet;
+        minesBet = bet;
+        minesActive = true;
+        gemsFound = 0;
+        minesMult = 1.0;
+        minesRevealed = Array(9).fill(false);
+        
+        const mineIdx = Math.floor(Math.random() * 9);
+        minesBoard = Array(9).fill('💎');
+        minesBoard[mineIdx] = '💣';
+        
+        renderMines();
+        document.getElementById('minesCashoutBtn').disabled = false;
+        document.getElementById('minesStartBtn').disabled = true;
+        document.getElementById('minesStatus').innerText = 'Игра началась!';
+        balanceEl.innerText = userBalance.toFixed(2) + ' $';
+    };
+    
+    function renderMines() {
+        let html = '';
+        for (let i=0; i<9; i++) {
+            let content = '❓', cls = '';
+            if (minesRevealed[i]) {
+                content = minesBoard[i];
+                cls = minesBoard[i] === '💣' ? 'bomb' : 'gem';
+            }
+            html += `<div class="mine-cell ${cls}" onclick="clickMine(${i})">${content}</div>`;
+        }
+        document.getElementById('minesGrid').innerHTML = html;
+    }
+    
+    window.clickMine = (idx) => {
+        if (!minesActive || minesRevealed[idx]) return;
+        minesRevealed[idx] = true;
+        
+        if (minesBoard[idx] === '💣') {
+            minesActive = false;
+            document.getElementById('minesCashoutBtn').disabled = true;
+            document.getElementById('minesStartBtn').disabled = false;
+            document.getElementById('minesStatus').innerText = `💥 Мина! -${minesBet}$`;
+            renderMines();
+            return;
+        }
+        
+        gemsFound++;
+        minesMult = 1.0 + (gemsFound * 0.5);
+        document.getElementById('minesMultDisplay').innerText = `Текущий x${minesMult.toFixed(2)}`;
+        renderMines();
+        
+        if (gemsFound === 8) cashoutMines();
+    };
+    
+    window.cashoutMines = () => {
+        if (!minesActive) return;
+        const win = minesBet * minesMult;
+        userBalance += win;
+        tg.sendData(JSON.stringify({action: 'mines_win', amount: win}));
+        minesActive = false;
+        document.getElementById('minesCashoutBtn').disabled = true;
+        document.getElementById('minesStartBtn').disabled = false;
+        document.getElementById('minesStatus').innerText = `✅ Выигрыш: ${win.toFixed(2)}$`;
+        balanceEl.innerText = userBalance.toFixed(2) + ' $';
+    };
+    
+    // Поллинг состояния
+    setInterval(() => { tg.sendData(JSON.stringify({action: 'get_state'})); }, 500);
+    
+    // Загрузка баланса при старте
+    tg.sendData(JSON.stringify({action: 'get_balance'}));
+    setInterval(updateUI, 100);
+</script>
+</body>
+</html>s
