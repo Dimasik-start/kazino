@@ -1,79 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crash Rocket</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { background: #0b0e11; color: white; font-family: sans-serif; text-align: center; margin: 0; overflow: hidden; }
-        .game-container { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #multiplier { font-size: 80px; font-weight: bold; color: #f0b90b; text-shadow: 0 0 20px rgba(240, 185, 11, 0.5); }
-        .rocket { font-size: 50px; transition: transform 0.1s linear; margin-top: 20px; }
-        .btn { background: #f0b90b; border: none; padding: 15px 40px; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 50px; }
-        .admin-panel { position: absolute; top: 10px; right: 10px; }
-        #crash-btn { background: #ff4d4d; color: white; padding: 5px 10px; font-size: 10px; border-radius: 5px; display: none; }
-    </style>
+    <title>Menu</title>
 </head>
 <body>
-    <div class="game-container">
-        <div id="status">ОЖИДАНИЕ...</div>
-        <div id="multiplier">x1.00</div>
-        <div id="rocket" class="rocket">🚀</div>
-        <button class="btn" onclick="startGame()">СТАВКА</button>
-        
-        <div class="admin-panel">
-            <button id="crash-btn" onclick="forceCrash()">ADMIN CRASH</button>
+
+   
+    <header class="header">
+        <div class="profile" id="profile">
+            <img class="avatar" id="avatar" src="user.photo_url" alt="">
+            <span class="username" id="username">user.first_name</span>
         </div>
-    </div>
+        <div class="wallet" id="wallet">
+            <div class="balance" id="balance">💰 12,450</div>
+            <button class="deposit-btn" id="depositBtn">💵 Пополнить</button>
+        </div>
+    </header>
+    
+    <hr class="divider">
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-
-        let currentX = 1.00;
-        let isFlying = false;
+   
+    <section class="games-section">
+        <h3 class="section-title">🎮 Игры</h3>
         
-        // Показываем кнопку админа, если это ты
-        if (tg.initDataUnsafe.user.id == 123456789) { // ВСТАВЬ СВОЙ ID
-            document.getElementById('crash-btn').style.display = 'block';
-        }
-
-        async function startGame() {
-            if (isFlying) return;
-            isFlying = true;
-            currentX = 1.00;
-            document.getElementById('status').innerText = "В ПОЛЕТЕ!";
+        <div class="games-container">
+           
+            <div class="game-card" id="game-rocket">
+                <div class="game-icon">🚀</div>
+                <p class="game-name">Ракета</p>
+            </div>
             
-            // Получаем точку краша от Python (имитация запроса)
-            // В реальности тут будет fetch('https://твой-хост/get_multiplier?bet=400&curr=stars')
-            let crashPoint = 2.50; 
             
-            let interval = setInterval(() => {
-                currentX += 0.02;
-                document.getElementById('multiplier').innerText = x${currentX.toFixed(2)};
-                
-                // Анимация тряски ракеты
-                document.getElementById('rocket').style.transform = translateY(${Math.sin(Date.now()/100)*10}px) scale(${1 + currentX/10});
+            <div class="game-card" id="game-bomb">
+                <div class="game-icon">💣</div>
+                <p class="game-name">Бомба</p>
+            </div>
+        </div>
+    </section>
 
-                if (currentX >= crashPoint) {
-                    clearInterval(interval);
-                    isFlying = false;
-                    document.getElementById('multiplier').style.color = 'red';
-                    document.getElementById('status').innerText = "КРАШ!";
-                    document.getElementById('rocket').innerText = "💥";
-                    setTimeout(() => {
-                        document.getElementById('rocket').innerText = "🚀";
-                        document.getElementById('multiplier').style.color = '#f0b90b';
-                    }, 2000);
-                }
-            }, 50);
-        }
+    <hr class="divider">
 
-        function forceCrash() {
-            // Сигнал на бэкенд для краша (нужен твой API)
-            fetch('/admin_crash?secret=' + tg.initDataUnsafe.user.id, {method: 'POST'});
+    
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="nav-play">
+            <span class="nav-icon">🎮</span>
+            <span class="nav-label">Играть</span>
+        </div>
+        <div class="nav-item" id="nav-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Профиль</span>
+        </div>
+        <div class="nav-item" id="nav-tasks">
+            <span class="nav-icon">📋</span>
+            <span class="nav-label">Задания</span>
+        </div>
+        <div class="nav-item" id="nav-deposit">
+            <span class="nav-icon">💳</span>
+            <span class="nav-label">Пополнения</span>
+        </div>
+    </nav>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    // 1. Получаем доступ к Telegram
+    let tg = window.Telegram.WebApp;
+    
+    // 2. Разворачиваем на весь экран
+    tg.expand();
+    
+    // 3. Достаём данные пользователя
+    let user = tg.initDataUnsafe.user;
+    
+    // 4. Находим элементы на странице
+    let usernameEl = document.getElementById('username');
+    let avatarEl = document.getElementById('avatar');
+    
+    // 5. Проверяем, есть ли пользователь
+    if (user) {
+        // Меняем имя
+        usernameEl.textContent = user.first_name;
+        
+        // Меняем аватарку (если есть)
+        if (user.photo_url) {
+            avatarEl.src = user.photo_url;
+        } else {
+            // Заглушка, если нет фото
+            avatarEl.src = 'https://ui-avatars.com/api/?name=' + user.first_name + '&background=3b82f6&color=fff';
         }
-    </script>
+    } else {
+        // Если запущено не в Telegram (для отладки в браузере)
+        usernameEl.textContent = 'Гость';
+        avatarEl.src = 'https://ui-avatars.com/api/?name=Guest&background=3b82f6&color=fff';
+    }
+</script>
 </body>
 </html>
