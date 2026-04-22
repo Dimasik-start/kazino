@@ -15,24 +15,50 @@
             <img class="avatar" id="avatar" src="user.photo_url" alt="">
             <span class="username" id="username">user.first_name</span>
         </div>
-        <div class="wallet" id="wallet">
-            <div class="balance" id="balance">💰 </div>
-            <div class="wallet-divider"></div>
-            <button class="deposit-btn" id="depositBtn">+</button>
+       
+<div class="wallet">
+    
+   
+    <div class="wallet-balances">
+        
+     
+        <div class="wallet-row">
+            <span class="wallet-icon">🥈</span>
+            <span class="wallet-value" id="silverBalance">0</span>
         </div>
+        
+      
+        <div class="wallet-horizontal-divider"></div>
+        
+        <div class="wallet-row">
+            <span class="wallet-icon">🪙</span>
+            <span class="wallet-value" id="goldBalance">0</span>
+        </div>
+        
+    </div>
+    
+  
+    <div class="wallet-vertical-divider"></div>
+    
+  
+    <button class="wallet-add-btn" id="depositBtn">+</button>
+    
+</div>
     </header>
     
-    <hr class="divider">
+  
 
    
-    <section class="games-section">
+    <section class="games-section" id = "games-section">
         <h3 class="section-title"> Игры</h3>
         
         <div class="games-container">
            
             <div class="game-card" id="game-rocket">
-                <div class="game-icon">🚀</div>
                 <p class="game-name">Ракета</p>
+                <div class="game-preview">
+                    <img src="raketa.jpg" alt="Ракета">
+                </div>
             </div>
             
             
@@ -42,10 +68,11 @@
             </div>
         </div>
     </section>
-
-    <hr class="divider">
-
+    <section class = "profiles" id="profiles">профиль</section>
+    <section class = "qwest" id="qwest">задания</section>
+    <section class = "kripta" id="kripta">пополнение</section>
     
+    <hr class="divider">
     <nav class="bottom-nav">
         <div class="nav-item active" id="nav-play">
             <span class="nav-icon">🎮</span>
@@ -64,9 +91,9 @@
             <span class="nav-label">Пополнения</span>
         </div>
     </nav>
+<script src= "script.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
     // 1. Получаем доступ к Telegram
     let tg = window.Telegram.WebApp;
