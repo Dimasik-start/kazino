@@ -1,104 +1,346 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* === 1. ОБЩИЕ СБРОСЫ === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-   
-    <header class="header">
-        <div class="profile" id="profile">
-            <img class="avatar" id="avatar" src="user.photo_url" alt="">
-            <span class="username" id="username">user.first_name</span>
-        </div>
-        <div class="wallet" id="wallet">
-            <div class="balance" ">💰 </div>
-            <div class="wallet-divider" id="balance">0</div>
-            <button class="deposit-btn" id="depositBtn">+</button>
-        </div>
-    </header>
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
     
-  
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+    
+    min-height: 100vh;
+    padding: 0;
+    padding-bottom: 100px;
+    
+    color: #ffffff;
+}
 
-   
-    <section class="games-section" id = "games-section">
-        <h3 class="section-title"> Игры</h3>
-        
-        <div class="games-container">
-           
-            <div class="game-card" id="game-rocket">
-                <div class="game-icon">🚀</div>
-                <p class="game-name">Ракета</p>
-            </div>
-            
-            
-            <div class="game-card" id="game-bomb">
-                <div class="game-icon">💣</div>
-                <p class="game-name">Бомба</p>
-            </div>
-        </div>
-    </section>
-    <section class = "profiles" id="profiles">профиль</section>
-    <section class = "qwest" id="qwest">задания</section>
-    <section class = "kripta" id="kripta">пополнение</section>
+/* === 2. ШАПКА === */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
     
-    <hr class="divider">
-    <nav class="bottom-nav">
-        <div class="nav-item active" id="nav-play">
-            <span class="nav-icon">🎮</span>
-            <span class="nav-label">Играть</span>
-        </div>
-        <div class="nav-item" id="nav-profile">
-            <span class="nav-icon">👤</span>
-            <span class="nav-label">Профиль</span>
-        </div>
-        <div class="nav-item" id="nav-tasks">
-            <span class="nav-icon">📋</span>
-            <span class="nav-label">Задания</span>
-        </div>
-        <div class="nav-item" id="nav-deposit">
-            <span class="nav-icon">💳</span>
-            <span class="nav-label">Пополнения</span>
-        </div>
-    </nav>
-<script src= "script.js"></script>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+    background: #2a2a2a;
+    
+    border: none;
+    box-shadow: none;
+    
+    padding: 14px 16px;
+    margin: 0;
+}
 
-<script>
-    // 1. Получаем доступ к Telegram
-    let tg = window.Telegram.WebApp;
+/* === 3. ПРОФИЛЬ (АВАТАР + ИМЯ) === */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 140px;
+    overflow: hidden;
+}
+
+#avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+    flex-shrink: 0;
+}
+
+#username {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* === 4. НОВЫЙ БЛОК БАЛАНСА === */
+.wallet {
+    display: flex;
+    align-items: stretch;
     
-    // 2. Разворачиваем на весь экран
-    tg.expand();
+    background: #1a1a1a;
+    border-radius: 16px;
     
-    // 3. Достаём данные пользователя
-    let user = tg.initDataUnsafe.user;
+    padding: 4px;
     
-    // 4. Находим элементы на странице
-    let usernameEl = document.getElementById('username');
-    let avatarEl = document.getElementById('avatar');
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.wallet-balances {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     
-    // 5. Проверяем, есть ли пользователь
-    if (user) {
-        // Меняем имя
-        usernameEl.textContent = user.first_name;
-        
-        // Меняем аватарку (если есть)
-        if (user.photo_url) {
-            avatarEl.src = user.photo_url;
-        } else {
-            // Заглушка, если нет фото
-            avatarEl.src = 'https://ui-avatars.com/api/?name=' + user.first_name + '&background=3b82f6&color=fff';
-        }
-    } else {
-        // Если запущено не в Telegram (для отладки в браузере)
-        usernameEl.textContent = 'Гость';
-        avatarEl.src = 'https://ui-avatars.com/api/?name=Guest&background=3b82f6&color=fff';
-    }
-</script>
-</body>
-</html>
+    padding: 6px 10px;
+    
+    flex: 1;
+    min-width: 0;
+}
+
+.wallet-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wallet-icon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.wallet-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wallet-horizontal-divider {
+    height: 1px;
+    background: #444444;
+    margin: 4px 0;
+    width: 100%;
+}
+
+.wallet-vertical-divider {
+    width: 1px;
+    background: #444444;
+    margin: 4px 0;
+}
+
+.wallet-add-btn {
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+    border: none;
+    border-radius: 12px;
+    
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 22px;
+    
+    /* Убираем фиксированные отступы */
+    padding: 0;
+    margin: 0;
+    
+    cursor: pointer;
+    outline: none;
+    
+    /* Кнопка занимает всю свою часть */
+    width: 48px;
+    align-self: stretch;  /* Растягиваем по высоте */
+    
+    /* Центрируем + внутри */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === 5. РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ === */
+.divider {
+    border: none;
+    height: 1px;
+    background: #333333;
+    margin: 0;
+}
+
+/* === 6. СЕКЦИЯ ИГР === */
+.games-section {
+    background: #0f0f0f;
+    padding: 20px 16px;
+    min-height: 100vh;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.games-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.game-card {
+    background: #2a2a2a;
+    border-radius: 20px;
+    padding: 0;  /* Убираем внутренние отступы */
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    cursor: pointer;
+    
+    width: 100%;
+    max-width: 380px;
+    height: 100px;  /* Фиксированная высота */
+    overflow: hidden;  /* Чтобы скругления обрезали картинку */
+    position: relative;
+}
+
+.game-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.game-card {
+    background: #2a2a2a;
+    border-radius: 20px;
+    padding: 0;  /* Убираем внутренние отступы */
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    cursor: pointer;
+    
+    width: 100%;
+    max-width: 380px;
+    height: 100px;  /* Фиксированная высота */
+    overflow: hidden;  /* Чтобы скругления обрезали картинку */
+    position: relative;
+}
+
+/* === 7. ВКЛАДКИ (ПРОФИЛЬ, ЗАДАНИЯ, ПОПОЛНЕНИЕ) === */
+.profiles {
+    display: none;
+    background: #0f0f0f;
+    padding: 20px 16px;
+    min-height: 100vh;
+}
+
+.qwest {
+    display: none;
+    background: #0f0f0f;
+    padding: 20px 16px;
+    min-height: 100vh;
+}
+
+.kripta {
+    display: none;
+    background: #0f0f0f;
+    padding: 20px 16px;
+    min-height: 100vh;
+}
+
+/* === 8. НИЖНЕЕ МЕНЮ === */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    background: #2a2a2a;
+    
+    border-radius: 20px 20px 0 0;
+    
+    padding: 14px 16px;
+    
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    border-radius: 30px;
+    
+    color: #888888;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-item.active {
+    color: #ffffff;
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+}
+
+.nav-icon {
+    font-size: 26px;
+}
+
+.nav-label {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+/* Контейнер для превью игры */
+.game-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    overflow: hidden;  /* Обрезает всё, что выходит за границы */
+    flex-shrink: 0;    /* Не даёт сжиматься */
+}
+
+.game-preview {
+    width: 50%;  /* Занимает половину карточки */
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.game-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;  /* Второе число — смещение по вертикали */
+    display: block;
+}
+.game-preview-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Диагональный градиент */
+    background: linear-gradient(
+        to top left,           /* направление: из правого нижнего в левый верхний */
+        transparent 0%,        /* правый нижний угол — прозрачно */
+        transparent 30%,       /* 30% пути — всё ещё прозрачно */
+        #2a2a2a 70%,           /* 70% пути — цвет карточки */
+        #2a2a2a 100%           /* левый верхний край — цвет карточки */
+    );
+    
+    pointer-events: none;
+}
+.game-name {
+    font-weight: 700;
+    font-size: 20px;           /* чуть уменьши, если надо */
+    color: #ffffff;
+    text-transform: uppercase;
+    padding-left: 16px;
+    padding-right: 8px;        /* отступ справа от текста */
+    
+    flex: 1;                   /* занимает доступное место */
+    white-space: nowrap;       /* не переносить */
+    overflow: hidden;          /* скрыть лишнее */
+    text-overflow: ellipsis;   /* показывать ... если не влезло */
+    
+    z-index: 2;
+}
