@@ -14,20 +14,32 @@ function спрятатьвсе() {
     задание.style.display = "none"
     пополнение.style.display = "none"
 }
+
+function убратьвсе() {
+    кнопкаиграть.classList.remove("active");
+    кнопкапрофиль.classList.remove("active");
+    кнопказадание.classList.remove("active");
+    кнопкапополнение.classList.remove("active");
+}
 function раздел(selection) {
     console.log("раздел вызван с параметром: " + selection);
     спрятатьвсе();
+    убратьвсе();
     if (selection === "games") {
         играть.style.display="block";
+        кнопкаиграть.classList.add("active");
     }
     if (selection === "profile") {
         профиль.style.display="block";
+        кнопкапрофиль.classList.add("active");
     } 
     if (selection==="tasks") {
         задание.style.display="block";
+        кнопказадание.classList.add("active");
     }
     if (selection==="deposit") {
         пополнение.style.display="block";
+        кнопкапополнение.classList.add("active")
     }
 
 }
@@ -41,5 +53,10 @@ function раздел(selection) {
     раздел("tasks");
 })
 кнопкапополнение.addEventListener("click", function() {
+    раздел("deposit");
+})
+
+let кнопкаплюс = document.getElementById("depositBtn")
+кнопкаплюс.addEventListener("click", function() {
     раздел("deposit");
 })
