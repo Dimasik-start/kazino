@@ -14,7 +14,7 @@ body {
     
     min-height: 100vh;
     padding: 0;
-    padding-bottom: 80px;
+    padding-bottom: 70px;
     
     color: #ffffff;
 }
@@ -24,19 +24,22 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
     
     background: #2a2a2a;
     
-    padding: 10px 12px;
+    padding: 8px 12px;
     margin: 0;
+    
+    overflow: hidden;
 }
 
+/* === 3. ПРОФИЛЬ === */
 .profile {
     display: flex;
     align-items: center;
-    gap: 10px;
-    
-    max-width: 130px;
+    gap: 8px;
+    max-width: 120px;
     overflow: hidden;
 }
 
@@ -49,7 +52,7 @@ body {
 }
 
 #username {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #ffffff;
     text-transform: uppercase;
@@ -58,223 +61,271 @@ body {
     text-overflow: ellipsis;
 }
 
-/* === 3. КОШЕЛЁК === */
+/* === 4. БЛОК БАЛАНСА === */
 .wallet {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     
-    background: #ffffff;
-    border-radius: 30px;
+    background: #1a1a1a;
+    border-radius: 12px;
     
-    padding: 4px 0 4px 16px;
+    padding: 3px;
+    
+    min-width: 110px;
+    max-width: 160px;
+    flex-shrink: 1;
 }
 
 .wallet-balances {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     
-    padding-right: 8px;
+    padding: 4px 6px;
+    
+    flex: 1;
+    min-width: 0;
 }
 
-.wallet-value {
-    font-size: 12px;
-    font-weight: 700;
-    color: #000000;
-    white-space: nowrap;
+.wallet-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .wallet-icon {
-    font-size: 14px;
-    margin-right: 4px;
+    font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.wallet-value {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wallet-horizontal-divider {
+    height: 1px;
+    background: #444444;
+    margin: 3px 0;
+    width: 100%;
+}
+
+.wallet-vertical-divider {
+    width: 1px;
+    background: #444444;
+    margin: 3px 0;
 }
 
 .wallet-add-btn {
     background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
     border: none;
-    border-radius: 30px;
-    
-    padding: 6px 14px;
+    border-radius: 10px;
     
     color: #ffffff;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 18px;
+    
+    width: 36px;
+    padding: 0;
+    margin: 0;
     
     cursor: pointer;
     outline: none;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
 }
 
-/* === 4. РАЗДЕЛИТЕЛИ === */
+/* === 5. БАННЕР === */
+.banner {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 10px 12px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.banner-text {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* === 6. РАЗДЕЛИТЕЛЬ === */
 .divider {
     border: none;
     height: 1px;
     background: #333333;
-    margin: 12px 0;
+    margin: 0;
 }
 
-/* === 5. СЕКЦИЯ ИГР === */
+/* === 7. СЕКЦИЯ ИГР === */
 .games-section {
     background: #0f0f0f;
-    padding: 16px;
+    padding: 16px 12px;
+    min-height: 100vh;
 }
 
 .section-title {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: #ffffff;
     text-transform: uppercase;
 }
 
-/* === 6. КОНТЕЙНЕР ИГР === */
 .games-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
 }
 
-/* === 7. КАРТОЧКА ИГРЫ === */
+/* === 8. КАРТОЧКА ИГРЫ === */
 .game-card {
     background: #2a2a2a;
     border-radius: 16px;
-    padding: 16px;
+    padding: 0;
     
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     
     cursor: pointer;
-    transition: all 0.2s;
+    
+    width: 100%;
+    max-width: 380px;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
 }
 
-/* === 8. ИКОНКА ИГРЫ === */
-.game-icon {
-    font-size: 40px;
-    line-height: 1;
-}
-
-/* === 9. НАЗВАНИЕ ИГРЫ === */
 .game-name {
     font-weight: 700;
     font-size: 18px;
     color: #ffffff;
     text-transform: uppercase;
+    padding-left: 16px;
+    padding-right: 8px;
+    
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    z-index: 2;
+}
+
+.game-preview {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.game-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    display: block;
+}
+
+.game-preview-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: linear-gradient(
+        to left,
+        transparent 0%,
+        transparent 20%,
+        #2a2a2a 70%,
+        #2a2a2a 100%
+    );
+    
+    pointer-events: none;
+}
+
+/* === 9. ВКЛАДКИ === */
+.profiles,
+.qwest,
+.kripta {
+    display: none;
+    background: #0f0f0f;
+    padding: 16px 12px;
+    min-height: 100vh;
 }
 
 /* === 10. НИЖНЕЕ МЕНЮ === */
 .bottom-nav {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: stretch;
     
-    background: #2a2a2a;
-    backdrop-filter: blur(8px);
+    background: #1a1a1a;
     
-    padding: 12px 14px;
+    border-radius: 16px 16px 0 0;
+    
+    padding: 0;
     
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    
+    gap: 0;
 }
 
-/* === 11. ЭЛЕМЕНТЫ МЕНЮ === */
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
     
-    color: #888888;
+    flex: 1;
+    align-self: stretch;
+    
+    padding: 8px 0;
+    
+    color: #666666;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: all 0.2s;
+    
+    font-weight: 600;
+    text-transform: uppercase;
+    
+    background: transparent;
 }
 
 .nav-item.active {
     color: #ffffff;
+    
     background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
-    border-radius: 30px;
+    
+    border-radius: 0;
+    
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
 }
 
-/* === 12. АДАПТАЦИЯ === */
-@media (max-width: 480px) {
-    .header {
-        padding: 8px 10px;
-    }
-    
-    .profile {
-        max-width: 120px;
-    }
-    
-    #avatar {
-        width: 32px;
-        height: 32px;
-    }
-    
-    #username {
-        font-size: 14px;
-    }
-    
-    .wallet {
-        padding: 4px 0 4px 12px;
-    }
-    
-    .wallet-balances {
-        padding-right: 6px;
-    }
-    
-    .wallet-value {
-        font-size: 11px;
-    }
-    
-    .wallet-icon {
-        margin-right: 4px;
-    }
-    
-    .wallet-add-btn {
-        padding: 5px 12px;
-    }
-    
-    .divider {
-        margin: 10px 0;
-    }
-    
-    .games-section {
-        padding: 14px;
-    }
-    
-    .section-title {
-        margin-bottom: 10px;
-    }
-    
-    .games-container {
-        gap: 10px;
-    }
-    
-    .game-card {
-        padding: 14px;
-    }
-    
-    .game-icon {
-        font-size: 36px;
-    }
-    
-    .game-name {
-        font-weight: 700;
-    }
-    
-    .bottom-nav {
-        padding: 12px 14px;
-    }
-    
-    .nav-item {
-        gap: 4px;
-    }
-    
-    .nav-icon {
-        font-size: 22px;
-    }
-    
-    .nav-label {
-        font-size: 12px;
-    }
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.nav-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
