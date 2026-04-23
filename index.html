@@ -2,129 +2,151 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>МЕНЮ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-   
+    <!-- ===== ШАПКА ===== -->
     <header class="header">
-        <div class="profile" id="profile">
-            <img class="avatar" id="avatar" src="user.photo_url" alt="">
-            <span class="username" id="username">user.first_name</span>
+        <div class="profile">
+            <img class="avatar" id="avatar" src="" alt="АВАТАР">
+            <span class="username" id="username">ИМЯ</span>
         </div>
-       
-<div class="wallet">
-    
-   
-    <div class="wallet-balances">
-        
-     
-        <div class="wallet-row">
-            <span class="wallet-icon">🥈</span>
-            <span class="wallet-value" id="silverBalance">0</span>
-        </div>
-        
-      
-        <div class="wallet-horizontal-divider"></div>
-        
-        <div class="wallet-row">
-            <span class="wallet-icon">🪙</span>
-            <span class="wallet-value" id="goldBalance">0</span>
-        </div>
-        
-    </div>
-    
-  
-    <div class="wallet-vertical-divider"></div>
-    
-  
-    <button class="wallet-add-btn" id="depositBtn">+</button>
-    
-</div>
-    </header>
-    
-  
-
-   
-    <section class="games-section" id = "games-section">
-        <h3 class="section-title"> Игры</h3>
-        
-        <div class="games-container">
-           
-            <div class="game-card" id="game-rocket">
-                <p class="game-name">Ракета</p>
-                <div class="game-preview">
-                    <img src="raketa.jpg" alt="Ракета">
+        <div class="wallet">
+            <div class="wallet-balances">
+                <div class="wallet-row">
+                    <span class="wallet-icon">🥈</span>
+                    <span class="wallet-value" id="silverBalance">0</span>
+                </div>
+                <div class="wallet-horizontal-divider"></div>
+                <div class="wallet-row">
+                    <span class="wallet-icon">🪙</span>
+                    <span class="wallet-value" id="goldBalance">0</span>
                 </div>
             </div>
-            
-            
+            <div class="wallet-vertical-divider"></div>
+            <button class="wallet-add-btn" id="depositBtn">+</button>
+        </div>
+    </header>
+
+    <hr class="divider">
+
+    <!-- ===== БАННЕР ===== -->
+    <div class="banner">
+        <span class="banner-text">ПОЛУЧИ 1000 МОНЕТ ЗА РЕГИСТРАЦИЮ</span>
+    </div>
+
+    <!-- ===== СЕКЦИЯ ИГР ===== -->
+    <section class="games-section" id="gamesSection">
+        <h3 class="section-title">ИГРЫ</h3>
+        <div class="games-container">
+            <div class="game-card" id="game-rocket">
+                <p class="game-name">РАКЕТА</p>
+                <div class="game-preview">
+                    <img src="raketa.jpg" alt="РАКЕТА">
+                    <div class="game-preview-fade"></div>
+                </div>
+            </div>
             <div class="game-card" id="game-bomb">
-                <div class="game-icon">💣</div>
-                <p class="game-name">Бомба</p>
+                <p class="game-name">БОМБА</p>
+                <div class="game-preview">
+                    <img src="bomba.jpg" alt="БОМБА">
+                    <div class="game-preview-fade"></div>
+                </div>
             </div>
         </div>
     </section>
-    <section class = "profiles" id="profiles">профиль</section>
-    <section class = "qwest" id="qwest">задания</section>
-    <section class = "kripta" id="kripta">пополнение</section>
-    
-    <hr class="divider">
+
+    <!-- ===== СЕКЦИЯ ПРОФИЛЬ ===== -->
+    <section class="profiles" id="profileSection">ПРОФИЛЬ</section>
+
+    <!-- ===== СЕКЦИЯ ЗАДАНИЯ ===== -->
+    <section class="qwest" id="tasksSection">ЗАДАНИЯ</section>
+
+    <!-- ===== СЕКЦИЯ ПОПОЛНЕНИЕ ===== -->
+    <section class="kripta" id="depositSection">ПОПОЛНЕНИЕ</section>
+
+    <!-- ===== ИГРА "РАКЕТА" ===== -->
+    <section class="rocket-game" id="rocketGame" style="display: none;">
+        
+        <div class="rocket-header">
+            <button class="rocket-back-btn" id="rocketBackBtn">← НАЗАД</button>
+            <div class="rocket-balance">
+                <span>🪙</span>
+                <span id="rocketGoldBalance">0</span>
+            </div>
+        </div>
+        
+        <div class="rocket-canvas-area">
+            <canvas id="rocketCanvas"></canvas>
+            <div class="rocket-multiplier" id="rocketMultiplier">1.00x</div>
+            <div class="rocket-status" id="rocketStatus">ОЖИДАНИЕ</div>
+        </div>
+        
+        <div class="rocket-history" id="rocketHistory"></div>
+        
+        <div class="rocket-players" id="rocketPlayers"></div>
+        
+        <button class="rocket-action-btn" id="rocketBetBtn">СДЕЛАТЬ СТАВКУ</button>
+        <button class="rocket-action-btn rocket-cashout-btn" id="rocketCashoutBtn" style="display: none;">
+            🛑 ЗАБРАТЬ <span id="rocketWin">0 🪙</span>
+        </button>
+        
+        <div class="bet-overlay" id="betOverlay" style="display: none;">
+            <div class="bet-modal">
+                <div class="bet-top-row">
+                    <div class="bet-currency-select">
+                        <button class="bet-currency-btn active" id="betGoldBtn">🪙 ЗОЛОТО</button>
+                        <button class="bet-currency-btn" id="betSilverBtn">🥈 СЕРЕБРО</button>
+                    </div>
+                    <div class="bet-amount-group">
+                        <input type="number" class="bet-amount-input" id="betAmountInput" value="100" min="10">
+                        <button class="bet-max-btn" id="betMaxBtn">МАКС</button>
+                    </div>
+                </div>
+                <div class="bet-quick-row">
+                    <button onclick="changeBet(10)">+10</button>
+                    <button onclick="changeBet(25)">+25</button>
+                    <button onclick="changeBet(50)">+50</button>
+                    <button onclick="changeBet(100)">+100</button>
+                </div>
+                <div class="bet-quick-row">
+                    <button onclick="changeBet(-10)">-10</button>
+                    <button onclick="changeBet(-25)">-25</button>
+                    <button onclick="changeBet(-50)">-50</button>
+                    <button onclick="changeBet(-100)">-100</button>
+                </div>
+                <button class="bet-confirm-btn" id="betConfirmBtn">СДЕЛАТЬ СТАВКУ</button>
+                <button class="bet-alt-btn" id="betDepositBtn" style="display: none;">💳 ПОПОЛНИТЬ БАЛАНС</button>
+                <button class="bet-alt-btn" id="betTasksBtn" style="display: none;">📋 К ЗАДАНИЯМ</button>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- ===== НИЖНЕЕ МЕНЮ ===== -->
     <nav class="bottom-nav">
         <div class="nav-item active" id="nav-play">
             <span class="nav-icon">🎮</span>
-            <span class="nav-label">Играть</span>
+            <span class="nav-label">ИГРАТЬ</span>
         </div>
         <div class="nav-item" id="nav-profile">
             <span class="nav-icon">👤</span>
-            <span class="nav-label">Профиль</span>
+            <span class="nav-label">ПРОФИЛЬ</span>
         </div>
         <div class="nav-item" id="nav-tasks">
             <span class="nav-icon">📋</span>
-            <span class="nav-label">Задания</span>
+            <span class="nav-label">ЗАДАНИЯ</span>
         </div>
         <div class="nav-item" id="nav-deposit">
             <span class="nav-icon">💳</span>
-            <span class="nav-label">Пополнения</span>
+            <span class="nav-label">ПОПОЛНЕНИЯ</span>
         </div>
     </nav>
-<script src= "script.js"></script>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<script>
-    // 1. Получаем доступ к Telegram
-    let tg = window.Telegram.WebApp;
-    
-    // 2. Разворачиваем на весь экран
-    tg.expand();
-    
-    // 3. Достаём данные пользователя
-    let user = tg.initDataUnsafe.user;
-    
-    // 4. Находим элементы на странице
-    let usernameEl = document.getElementById('username');
-    let avatarEl = document.getElementById('avatar');
-    
-    // 5. Проверяем, есть ли пользователь
-    if (user) {
-        // Меняем имя
-        usernameEl.textContent = user.first_name;
-        
-        // Меняем аватарку (если есть)
-        if (user.photo_url) {
-            avatarEl.src = user.photo_url;
-        } else {
-            // Заглушка, если нет фото
-            avatarEl.src = 'https://ui-avatars.com/api/?name=' + user.first_name + '&background=3b82f6&color=fff';
-        }
-    } else {
-        // Если запущено не в Telegram (для отладки в браузере)
-        usernameEl.textContent = 'Гость';
-        avatarEl.src = 'https://ui-avatars.com/api/?name=Guest&background=3b82f6&color=fff';
-    }
-</script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
