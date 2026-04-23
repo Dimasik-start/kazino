@@ -9,13 +9,10 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    
     background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
-    
     min-height: 100vh;
     padding: 0;
     padding-bottom: 70px;
-    
     color: #ffffff;
 }
 
@@ -25,16 +22,12 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 8px;
-    
     background: #2a2a2a;
-    
     padding: 8px 12px;
     margin: 0;
-    
     overflow: hidden;
 }
 
-/* === 3. ПРОФИЛЬ === */
 .profile {
     display: flex;
     align-items: center;
@@ -61,16 +54,13 @@ body {
     text-overflow: ellipsis;
 }
 
-/* === 4. БЛОК БАЛАНСА === */
+/* === 3. БЛОК БАЛАНСА === */
 .wallet {
     display: flex;
     align-items: stretch;
-    
     background: #1a1a1a;
     border-radius: 12px;
-    
     padding: 3px;
-    
     min-width: 110px;
     max-width: 160px;
     flex-shrink: 1;
@@ -80,9 +70,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
     padding: 4px 6px;
-    
     flex: 1;
     min-width: 0;
 }
@@ -125,25 +113,21 @@ body {
     background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
     border: none;
     border-radius: 10px;
-    
     color: #ffffff;
     font-weight: 700;
     font-size: 18px;
-    
     width: 36px;
     padding: 0;
     margin: 0;
-    
     cursor: pointer;
     outline: none;
-    
     display: flex;
     align-items: center;
     justify-content: center;
     align-self: stretch;
 }
 
-/* === 5. БАННЕР === */
+/* === 4. БАННЕР === */
 .banner {
     background: linear-gradient(135deg, #ff6b6b, #ff8e53);
     border-radius: 10px;
@@ -160,7 +144,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* === 6. РАЗДЕЛИТЕЛЬ === */
+/* === 5. РАЗДЕЛИТЕЛЬ === */
 .divider {
     border: none;
     height: 1px;
@@ -168,7 +152,7 @@ body {
     margin: 0;
 }
 
-/* === 7. СЕКЦИЯ ИГР === */
+/* === 6. СЕКЦИЯ ИГР === */
 .games-section {
     background: #0f0f0f;
     padding: 16px 12px;
@@ -190,18 +174,15 @@ body {
     gap: 10px;
 }
 
-/* === 8. КАРТОЧКА ИГРЫ === */
+/* === 7. КАРТОЧКА ИГРЫ === */
 .game-card {
     background: #2a2a2a;
     border-radius: 16px;
     padding: 0;
-    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
     cursor: pointer;
-    
     width: 100%;
     max-width: 380px;
     height: 80px;
@@ -216,12 +197,10 @@ body {
     text-transform: uppercase;
     padding-left: 16px;
     padding-right: 8px;
-    
     flex: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
     z-index: 2;
 }
 
@@ -246,19 +225,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    
-    background: linear-gradient(
-        to left,
-        transparent 0%,
-        transparent 20%,
-        #2a2a2a 70%,
-        #2a2a2a 100%
-    );
-    
+    background: linear-gradient(to left, transparent 0%, transparent 20%, #2a2a2a 70%, #2a2a2a 100%);
     pointer-events: none;
 }
 
-/* === 9. ВКЛАДКИ === */
+/* === 8. ВКЛАДКИ === */
 .profiles,
 .qwest,
 .kripta {
@@ -268,23 +239,18 @@ body {
     min-height: 100vh;
 }
 
-/* === 10. НИЖНЕЕ МЕНЮ === */
+/* === 9. НИЖНЕЕ МЕНЮ === */
 .bottom-nav {
     display: flex;
     justify-content: space-evenly;
     align-items: stretch;
-    
     background: #1a1a1a;
-    
     border-radius: 16px 16px 0 0;
-    
     padding: 0;
-    
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    
     gap: 0;
 }
 
@@ -293,29 +259,21 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
     flex: 1;
     align-self: stretch;
-    
     padding: 8px 0;
-    
     color: #666666;
     cursor: pointer;
     transition: all 0.2s;
-    
     font-weight: 600;
     text-transform: uppercase;
-    
     background: transparent;
 }
 
 .nav-item.active {
     color: #ffffff;
-    
     background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
-    
     border-radius: 0;
-    
     box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
 }
 
@@ -328,4 +286,273 @@ body {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
+}
+
+/* === 10. ИГРА "РАКЕТА" === */
+.rocket-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0f0f0f;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.rocket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #1a1a1a;
+}
+
+.rocket-back-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.rocket-balance {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.rocket-canvas-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+}
+
+#rocketCanvas {
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+}
+
+.rocket-multiplier {
+    font-size: 64px;
+    font-weight: 800;
+    color: #10b981;
+    margin-top: 10px;
+}
+
+.rocket-multiplier.crashed {
+    color: #ef4444;
+}
+
+.rocket-status {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* === 11. ИСТОРИЯ И ИГРОКИ === */
+.rocket-history {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    justify-content: center;
+}
+
+.rocket-history-item {
+    min-width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.rocket-history-item.green { background: #10b981; }
+.rocket-history-item.red { background: #ef4444; }
+
+.rocket-players {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.rocket-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.rocket-player-status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.rocket-player-status.waiting { background: #334155; color: #ffffff; }
+.rocket-player-status.win { background: #10b981; color: #ffffff; }
+.rocket-player-status.lose { background: #ef4444; color: #ffffff; }
+
+/* === 12. КНОПКИ ДЕЙСТВИЙ === */
+.rocket-action-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+    color: #ffffff;
+}
+
+.rocket-cashout-btn {
+    background: #10b981;
+}
+
+/* === 13. ВСПЛЫВАЮЩЕЕ ОКНО === */
+.bet-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bet-modal {
+    background: #1e1e1e;
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bet-top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bet-currency-select {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bet-currency-btn {
+    background: #2a2a2a;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 12px;
+    color: #888;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.bet-currency-btn.active {
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+    color: #fff;
+}
+
+.bet-amount-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.bet-amount-input {
+    flex: 1;
+    background: #2a2a2a;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 16px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    min-width: 0;
+}
+
+.bet-max-btn {
+    background: #3b82f6;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 14px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.bet-quick-row {
+    display: flex;
+    gap: 6px;
+}
+
+.bet-quick-row button {
+    flex: 1;
+    background: #2a2a2a;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 4px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.bet-confirm-btn {
+    background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+    border: none;
+    border-radius: 40px;
+    padding: 14px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bet-alt-btn {
+    background: #2a2a2a;
+    border: 1px solid #8b5cf6;
+    border-radius: 40px;
+    padding: 14px;
+    color: #8b5cf6;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
 }
