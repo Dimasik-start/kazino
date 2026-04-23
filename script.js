@@ -18,6 +18,10 @@ if (user) {
     avatarEl.src = 'https://ui-avatars.com/api/?name=GUEST&background=3b82f6&color=fff';
 }
 
+// ========== ТЕСТОВЫЙ БАЛАНС ==========
+document.getElementById('goldBalance').textContent = '100';
+document.getElementById('silverBalance').textContent = '50';
+
 // ========== ОСНОВНЫЕ ПЕРЕМЕННЫЕ ==========
 let играть = document.getElementById("gamesSection");
 let профиль = document.getElementById("profileSection");
@@ -100,6 +104,8 @@ let currentMultiplier = 1.0;
 let isGameRunning = false;
 let selectedCurrency = 'gold';
 let playerBet = 0;
+let gameInterval = null;
+let gameTimeout = null;
 
 // ========== ОТКРЫТИЕ / ЗАКРЫТИЕ ==========
 function openRocketGame() {
@@ -115,6 +121,9 @@ function closeRocketGame() {
     document.querySelector('.header').style.display = 'flex';
     document.querySelector('.bottom-nav').style.display = 'flex';
     rocketGame.style.display = 'none';
+    // Очистка таймеров при выходе
+    if (gameInterval) clearInterval(gameInterval);
+    if (gameTimeout) clearTimeout(gameTimeout);
     раздел('games');
 }
 
@@ -205,15 +214,24 @@ betTasksBtn.addEventListener('click', () => {
 
 betConfirmBtn.addEventListener('click', () => {
     playerBet = parseInt(betAmountInput.value);
+    let balance = getBalance(selectedCurrency);
+    if (selectedCurrency === 'gold') {
+        document.getElementById('goldBalance').textContent = balance - playerBet;
+    } else {
+        document.getElementById('silverBalance').textContent = balance - playerBet;
+    }
+    rocketGoldBalance.textContent = document.getElementById('goldBalance').textContent;
     betOverlay.style.display = 'none';
     rocketBetBtn.style.display = 'none';
     rocketCashoutBtn.style.display = 'block';
     rocketWin.textContent = '0 🪙';
-    startGame();
 });
 
 // ========== ЛОГИКА ИГРЫ ==========
 function resetGame() {
+    if (gameInterval) clearInterval(gameInterval);
+    if (gameTimeout) clearTimeout(gameTimeout);
+    
     currentMultiplier = 1.0;
     isGameRunning = false;
     playerBet = 0;
@@ -222,46 +240,80 @@ function resetGame() {
     rocketStatus.textContent = 'ОЖИДАНИЕ СТАВОК';
     rocketBetBtn.style.display = 'block';
     rocketCashoutBtn.style.display = 'none';
+    rocketWin.textContent = '0 🪙';
     drawRocket(0);
+    
+    // Автозапуск через 3 секунды
+    gameTimeout = setTimeout(autoStartGame, 3000);
 }
 
-function startGame() {
+function autoStartGame() {
+    if (isGameRunning) return;
     isGameRunning = true;
     currentMultiplier = 1.0;
     rocketStatus.textContent = 'ЛЕТИТ';
-    let crashAt = Math.random() * 9 + 1;
-    const interval = setInterval(() => {
-        if (!isGameRunning) { clearInterval(interval); return; }
-        currentMultiplier += 0.05;
+    
+    let crashAt = Math.random() * 4 + 1; // от 1x до 5x
+    
+    gameInterval = setInterval(() => {
+        if (!isGameRunning) {
+            clearInterval(gameInterval);
+            return;
+        }
+        currentMultiplier += 0.03;
         rocketMultiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-        rocketWin.textContent = Math.floor(playerBet * currentMultiplier) + ' 🪙';
         drawRocket(currentMultiplier);
-        if (currentMultiplier >= crashAt) crash(interval);
+        
+        // Обновление потенциального выигрыша игрока
+        if (playerBet > 0) {
+            rocketWin.textContent = Math.floor(playerBet * currentMultiplier) + ' 🪙';
+        }
+        
+        if (currentMultiplier >= crashAt) {
+            crashAuto();
+        }
     }, 100);
-    addPlayer('ВЫ', playerBet, 'waiting');
 }
 
-function crash(interval) {
-    clearInterval(interval);
+function crashAuto() {
+    if (gameInterval) clearInterval(gameInterval);
     isGameRunning = false;
     rocketMultiplier.classList.add('crashed');
     rocketStatus.textContent = 'КРАХ! ' + currentMultiplier.toFixed(2) + 'x';
     rocketCashoutBtn.style.display = 'none';
-    rocketBetBtn.style.display = 'none';
-    updatePlayerStatus('ВЫ', 'lose');
+    
+    // Если игрок не забрал ставку — проигрыш
+    if (playerBet > 0) {
+        updatePlayerStatus('ВЫ', 'lose');
+    }
+    
     addHistoryItem(currentMultiplier.toFixed(2) + 'x', 'red');
-    setTimeout(resetGame, 10000);
+    
+    // 10 секунд перерыв
+    gameTimeout = setTimeout(resetGame, 10000);
 }
 
+// Кнопка "Забрать"
 rocketCashoutBtn.addEventListener('click', () => {
     if (!isGameRunning) return;
     isGameRunning = false;
+    if (gameInterval) clearInterval(gameInterval);
+    
     let winAmount = Math.floor(playerBet * currentMultiplier);
+    
+    // Начисление выигрыша
+    let currentGold = parseInt(document.getElementById('goldBalance').textContent) || 0;
+    document.getElementById('goldBalance').textContent = currentGold + winAmount;
+    rocketGoldBalance.textContent = document.getElementById('goldBalance').textContent;
+    
     rocketStatus.textContent = 'ВЫИГРЫШ: ' + winAmount + ' 🪙 (' + currentMultiplier.toFixed(2) + 'x)';
     rocketCashoutBtn.style.display = 'none';
+    
     updatePlayerStatus('ВЫ', 'win');
     addHistoryItem(currentMultiplier.toFixed(2) + 'x', 'green');
-    setTimeout(resetGame, 5000);
+    
+    playerBet = 0;
+    // Ждём до окончания раунда
 });
 
 // ========== ОТРИСОВКА ==========
@@ -281,7 +333,7 @@ function drawRocket(mult) {
     }
     
     ctx.beginPath();
-    ctx.strokeStyle = '#10b981';
+    ctx.strokeStyle = currentMultiplier >= 5 ? '#ef4444' : '#10b981';
     ctx.lineWidth = 3;
     for (let x = 0; x < rocketCanvas.width; x++) {
         let progress = x / rocketCanvas.width;
