@@ -65,61 +65,22 @@
 
     <!-- ===== ИГРА "РАКЕТА" ===== -->
     <section class="rocket-game" id="rocketGame" style="display: none;">
-        
-        <div class="rocket-header">
-            <button class="rocket-back-btn" id="rocketBackBtn">← НАЗАД</button>
-            <div class="rocket-balance">
-                <span>🪙</span>
-                <span id="rocketGoldBalance">0</span>
-            </div>
-        </div>
-        
-        <div class="rocket-canvas-area">
-            <canvas id="rocketCanvas"></canvas>
-            <div class="rocket-multiplier" id="rocketMultiplier">1.00x</div>
-            <div class="rocket-status" id="rocketStatus">ОЖИДАНИЕ</div>
-        </div>
-        
-        <div class="rocket-history" id="rocketHistory"></div>
-        
-        <div class="rocket-players" id="rocketPlayers"></div>
-        
-        <button class="rocket-action-btn" id="rocketBetBtn">СДЕЛАТЬ СТАВКУ</button>
-        <button class="rocket-action-btn rocket-cashout-btn" id="rocketCashoutBtn" style="display: none;">
-            🛑 ЗАБРАТЬ <span id="rocketWin">0 🪙</span>
-        </button>
-        
-        <div class="bet-overlay" id="betOverlay" style="display: none;">
-            <div class="bet-modal">
-                <div class="bet-top-row">
-                    <div class="bet-currency-select">
-                        <button class="bet-currency-btn active" id="betGoldBtn">🪙 ЗОЛОТО</button>
-                        <button class="bet-currency-btn" id="betSilverBtn">🥈 СЕРЕБРО</button>
-                    </div>
-                    <div class="bet-amount-group">
-                        <input type="number" class="bet-amount-input" id="betAmountInput" value="100" min="10">
-                        <button class="bet-max-btn" id="betMaxBtn">МАКС</button>
-                    </div>
-                </div>
-                <div class="bet-quick-row">
-                    <button onclick="changeBet(10)">+10</button>
-                    <button onclick="changeBet(25)">+25</button>
-                    <button onclick="changeBet(50)">+50</button>
-                    <button onclick="changeBet(100)">+100</button>
-                </div>
-                <div class="bet-quick-row">
-                    <button onclick="changeBet(-10)">-10</button>
-                    <button onclick="changeBet(-25)">-25</button>
-                    <button onclick="changeBet(-50)">-50</button>
-                    <button onclick="changeBet(-100)">-100</button>
-                </div>
-                <button class="bet-confirm-btn" id="betConfirmBtn">СДЕЛАТЬ СТАВКУ</button>
-                <button class="bet-alt-btn" id="betDepositBtn" style="display: none;">💳 ПОПОЛНИТЬ БАЛАНС</button>
-                <button class="bet-alt-btn" id="betTasksBtn" style="display: none;">📋 К ЗАДАНИЯМ</button>
-            </div>
-        </div>
-        
-    </section>
+    <div class="rocket-header">
+        <button class="rocket-back-btn" id="rocketBackBtn">← НАЗАД</button>
+        <div class="rocket-balance"><span>🪙</span> <span id="rocketGoldBalance">0</span></div>
+    </div>
+    <div class="rocket-canvas-area">
+        <canvas id="rocketCanvas"></canvas>
+        <div class="rocket-multiplier" id="rocketMultiplier">1.00x</div>
+        <div class="rocket-timer" id="rocketTimer"></div>
+    </div>
+    <div class="rocket-history" id="rocketHistory"></div>
+    <div class="rocket-players" id="rocketPlayers"></div>
+    <button class="rocket-action-btn" id="rocketBetBtn">СДЕЛАТЬ СТАВКУ</button>
+    <button class="rocket-action-btn rocket-cashout-btn" id="rocketCashoutBtn" style="display:none;">🛑 ЗАБРАТЬ <span id="rocketWin">0 🪙</span></button>
+    <!-- Модалка ставки оставляем твою -->
+</section>
+
 
     <!-- ===== НИЖНЕЕ МЕНЮ ===== -->
     <nav class="bottom-nav">
