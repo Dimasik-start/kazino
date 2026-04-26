@@ -99,7 +99,7 @@ const betDepositBtn = document.getElementById('betDepositBtn');
 const betTasksBtn = document.getElementById('betTasksBtn');
 
 // WebSocket и состояние
-const WS_URL = "ws://127.0.0.1:8000/ws/";  // <-- замени на свой VPS
+const WS_URL = "wss://ngrok.com/docs/errors/err_ngrok_4018/ws/";  // <-- замени на свой VPS
 let ws = null;
 let userId = user ? user.id.toString() : 'guest';
 let currentMultiplier = 1.0;
