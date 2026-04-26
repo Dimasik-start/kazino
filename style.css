@@ -556,3 +556,49 @@ body {
     cursor: pointer;
     text-align: center;
 }
+/* Таймер */
+.rocket-timer {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+/* История с переливающимся градиентом */
+.rocket-history-item {
+    min-width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    animation: gradientShift 2s ease infinite;
+    background-size: 200% 200%;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.rocket-history-item.crashed {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+/* Множитель с пульсацией */
+.rocket-multiplier {
+    font-size: 64px;
+    font-weight: 800;
+    color: #10b981;
+    animation: pulse 0.5s ease infinite alternate;
+}
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+.rocket-multiplier.crashed {
+    color: #ef4444;
+}
